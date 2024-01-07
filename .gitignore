@@ -1,1 +1,7 @@
 lazy-lock.json
+
+# nodejs
+node_modules/
+package-lock.json
+package.json
+

@@ -13,10 +13,13 @@ return {
                     -- Python
                     null_ls.builtins.formatting.black,
                     null_ls.builtins.formatting.isort,
+
+                    -- YAML
+                    null_ls.builtins.formatting.yamlfmt,
                 },
             })
 
             vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})
-        end
+        end,
     },
 }

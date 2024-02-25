@@ -9,11 +9,11 @@ return {
                 sources = {
                     -- Lua
                     null_ls.builtins.formatting.stylua,
-
                     -- Python
                     null_ls.builtins.formatting.black,
                     null_ls.builtins.formatting.isort,
-
+                    -- C/C++
+                    null_ls.builtins.formatting.clang_format,
                     -- YAML
                     null_ls.builtins.formatting.yamlfmt,
                 },

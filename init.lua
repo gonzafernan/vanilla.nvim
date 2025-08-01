@@ -32,7 +32,8 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- Keymaps
-vim.keymap.set("n", "-", "<cmd>Oil<CR>")
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostics (float)" })
 
 -- Plugins
 require("lazy").setup("plugins")
+

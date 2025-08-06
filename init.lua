@@ -34,6 +34,7 @@ vim.opt.rtp:prepend(lazypath)
 -- Keymaps
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostics (float)" })
 vim.keymap.set("n", "<leader>q", ":bd<CR>", { desc = "Close current buffer" })
+vim.keymap.set("n", "<leader>tf", require("lsp.formatting").toggle_autoformat, { desc = "Toggle LSP autoformat" })
 
 -- Plugins
 require("lazy").setup("plugins")

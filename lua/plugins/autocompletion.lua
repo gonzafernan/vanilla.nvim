@@ -14,6 +14,7 @@ return {
 	-- event = { "InsertEnter", "CmdlineEnter" },
 	config = function()
 		local cmp = require("cmp")
+		local formatting = require("lsp.formatting")
 
 		cmp.setup({
 			snippet = {
@@ -99,6 +100,7 @@ return {
 		})
 		require("lspconfig").clangd.setup({
 			capabilities = capabilities,
+			on_attach = formatting.on_attach,
 		})
 		require("lspconfig").texlab.setup({
 			capabilities = capabilities,

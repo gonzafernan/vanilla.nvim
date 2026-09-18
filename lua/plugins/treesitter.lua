@@ -20,6 +20,7 @@ return {
 				"python",
 				"markdown",
 				"markdown_inline",
+				"zig",
 			},
 
 			-- Install parsers synchronously (only applied to `ensure_installed`)

@@ -2,6 +2,7 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
+			"hrsh7th/cmp-nvim-lsp",
 			{
 				"folke/lazydev.nvim",
 				ft = "lua", -- only load on lua files
@@ -16,21 +17,21 @@ return {
 		},
 		lazy = false,
 		config = function()
-			local lspconfig = require("lspconfig")
-			local formatting = require("lsp.formatting")
+			-- Native vim.lsp.config/enable (0.11+); capabilities apply to every
+			-- server via '*' instead of being repeated per-server.
+			vim.lsp.config("*", {
+				capabilities = require("cmp_nvim_lsp").default_capabilities(),
+			})
 
-			lspconfig.lua_ls.setup({
-				on_attach = formatting.on_attach,
-			})
-			lspconfig.ruff.setup({
-				on_attach = formatting.on_attach,
-			})
-			lspconfig.pyright.setup({
-				on_attach = formatting.on_attach,
-			})
-			-- tinymist configuration: https://myriad-dreamin.github.io/tinymist/frontend/neovim.html
-			lspconfig.tinymist.setup({
-				on_attach = formatting.on_attach,
+			-- No PDF sync exists for Typst+Zathura (SyncTeX is TeX-only); <leader>tp
+			-- just opens Zathura, which reloads on its own after each save.
+			vim.lsp.config("tinymist", {
+				on_attach = function(_, bufnr)
+					vim.keymap.set("n", "<leader>tp", function()
+						local pdf = vim.fn.expand("%:p:r") .. ".pdf"
+						vim.fn.jobstart({ "zathura", pdf }, { detach = true })
+					end, { buffer = bufnr, desc = "Preview Typst PDF in Zathura" })
+				end,
 				settings = {
 					formatterMode = "typstyle",
 					exportPdf = "onSave",
@@ -38,9 +39,19 @@ return {
 				},
 			})
 
-			lspconfig.verible.setup({
-				cmd = { "verible-verilog-ls" },
-				on_attach = formatting.on_attach,
+			vim.lsp.config("verible", { cmd = { "verible-verilog-ls" } })
+
+			-- Format-on-save is handled by conform.nvim (plugins/conform.lua), not here.
+			vim.lsp.enable({
+				"lua_ls",
+				"bashls",
+				"clangd",
+				"texlab",
+				"ruff",
+				"pyright",
+				"tinymist",
+				"verible",
+				"zls",
 			})
 
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})

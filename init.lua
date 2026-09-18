@@ -34,7 +34,10 @@ vim.opt.rtp:prepend(lazypath)
 -- Keymaps
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostics (float)" })
 vim.keymap.set("n", "<leader>q", ":bnext | bd#<CR>", { desc = "Close current buffer and go to next one" })
-vim.keymap.set("n", "<leader>tf", require("lsp.formatting").toggle_autoformat, { desc = "Toggle LSP autoformat" })
+vim.keymap.set("n", "<leader>tf", function()
+	vim.g.disable_autoformat = not vim.g.disable_autoformat
+	vim.notify("Autoformat (global) " .. (vim.g.disable_autoformat and "disabled" or "enabled"))
+end, { desc = "Toggle autoformat" })
 
 vim.keymap.set("n", "[q", ":cprev<CR>", { desc = "Previous item in quickfix list" })
 vim.keymap.set("n", "]q", ":cnext<CR>", { desc = "Next item in quickfix list" })

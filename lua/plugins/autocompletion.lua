@@ -14,7 +14,6 @@ return {
 	-- event = { "InsertEnter", "CmdlineEnter" },
 	config = function()
 		local cmp = require("cmp")
-		local formatting = require("lsp.formatting")
 
 		cmp.setup({
 			snippet = {
@@ -88,25 +87,6 @@ return {
 			}, {
 				{ name = "cmdline" },
 			}),
-		})
-
-		-- Set up lspconfig.
-		local capabilities = require("cmp_nvim_lsp").default_capabilities()
-		require("lspconfig").lua_ls.setup({
-			capabilities = capabilities,
-		})
-		require("lspconfig").bashls.setup({
-			capabilities = capabilities,
-		})
-		require("lspconfig").clangd.setup({
-			capabilities = capabilities,
-			on_attach = formatting.on_attach,
-		})
-		require("lspconfig").texlab.setup({
-			capabilities = capabilities,
-		})
-		require("lspconfig").pyright.setup({
-			capabilities = capabilities,
 		})
 	end,
 }
